@@ -57,13 +57,13 @@ public:
 
             for( const std::filesystem::directory_entry &desElement : std::filesystem::recursive_directory_iterator( des))
             {
-                std::cout << "des: " << desElement << std::endl;
+                std::cout << "des: " << desElement << " size:" << desElement.file_size() << " modifiTime:" << std::format("{}", desElement.last_write_time()) << std::endl;
                 tmpBuf.emplace( desElement.path().generic_string(), 0);
             }
 
             for( const std::filesystem::directory_entry &srcElement : std::filesystem::recursive_directory_iterator( src))
             {
-                std::cout << "src: " << srcElement << std::endl;
+                std::cout << "src: " << srcElement << " size:" << srcElement.file_size() << " modifiTime:" << std::format("{}", srcElement.last_write_time()) << std::endl;
                 files::iterator itr = tmpBuf.find( srcElement.path().generic_string());
 
 

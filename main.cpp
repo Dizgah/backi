@@ -77,13 +77,13 @@ public:
                         diff.try_emplace( srcElement.path().generic_string(), static_cast< std::int64_t>( dr.file_size() - srcElement.file_size()));
                     }
                 }
-                else if( !diff.try_emplace( srcElement.path().generic_string(), srcElement.file_size()).second)//it's a new file
+                else if( diff.try_emplace( srcElement.path().generic_string(), srcElement.file_size()).second)//it's a new file
                 {
-
+                    std::cout << "insert Success!" << std::endl;
                 }
                 else//insreting new file to list has been failed!
                 {
-
+                    std::cout << "insert Failed!" << std::endl;
                 }
             }
 

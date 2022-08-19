@@ -7,7 +7,6 @@
 #include <utility>
 #include <chrono>
 
-
 typedef enum
 {
     ERR_SUCCESS             = 0x00,
@@ -29,7 +28,6 @@ public:
 
     BackiCore()
     {
-
     }
 
     BackiCore( const std::string &des, const std::string &src)

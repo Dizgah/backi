@@ -12,6 +12,7 @@ typedef enum
     ERR_SUCCESS             = 0x00,
     ERR_FILE_NOT_FOUND,
     ERR_ADDRESS_INVALID,
+    ERR_BAD_ARGUMENT,
 
     ERR_UNKNOWN             = 0xFF
 }ERR_TYPE;

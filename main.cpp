@@ -12,6 +12,7 @@ typedef enum
     ERR_SUCCESS             = 0x00,
     ERR_FILE_NOT_FOUND,
     ERR_ADDRESS_INVALID,
+    ERR_BAD_ARGUMENT,
 
     ERR_UNKNOWN             = 0xFF
 }ERR_TYPE;
@@ -74,6 +75,7 @@ public:
                     {
                         diff.try_emplace( srcElement.path().generic_string(), static_cast< std::int64_t>( dr.file_size() - srcElement.file_size()));
                     }
+
                 }
                 else if( diff.try_emplace( srcElement.path().generic_string(), srcElement.file_size()).second)//it's a new file
                 {

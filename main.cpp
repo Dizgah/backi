@@ -43,7 +43,7 @@ public:
 
     ERR_TYPE cpy( const std::string &des, std::string src)
     {
-        files tmpBuf;
+        files desFiles;
 
 
         try
@@ -56,16 +56,16 @@ public:
             for( const std::filesystem::directory_entry &desElement : std::filesystem::recursive_directory_iterator( des))
             {
                 std::cout << "des: " << desElement << " size:" << desElement.file_size() << " modifiTime:" << std::format("{}", desElement.last_write_time()) << std::endl;
-                tmpBuf.emplace( desElement.path().generic_string(), 0);
+                desFiles.emplace( desElement.path().generic_string(), 0);
             }
 
             for( const std::filesystem::directory_entry &srcElement : std::filesystem::recursive_directory_iterator( src))
             {
                 std::cout << "src: " << srcElement << " size:" << srcElement.file_size() << " modifiTime:" << std::format("{}", srcElement.last_write_time()) << std::endl;
-                files::iterator itr = tmpBuf.find( srcElement.path().generic_string());
+                files::iterator itr = desFiles.find( srcElement.path().generic_string());
 
 
-                if( itr != tmpBuf.end())//check for modification
+                if( itr != desFiles.end())//check for modification
                 {
                     std::filesystem::directory_entry dr( itr->first);
 
@@ -97,7 +97,7 @@ public:
                 << "path2(): " << ex.path2() << '\n'
                 << "code().value():    " << ex.code().value() << '\n'
                 << "code().message():  " << ex.code().message() << '\n'
-                << "code().category(): " << ex.code().category().name() << '\n';
+                << "code().category(): " << ex.code().category().name() << std::endl;
         }
 
         return ERR_UNKNOWN;

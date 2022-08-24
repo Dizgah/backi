@@ -9,12 +9,12 @@
 
 typedef enum
 {
-    ERR_SUCCESS             = 0x00,
+    ERR_SUCCESS = 0x00,
     ERR_FILE_NOT_FOUND,
     ERR_ADDRESS_INVALID,
     ERR_BAD_ARGUMENT,
 
-    ERR_UNKNOWN             = 0xFF
+    ERR_UNKNOWN = 0xFF
 }ERR_TYPE;
 
 typedef std::map< std::string, std::int64_t> files;
@@ -31,7 +31,7 @@ public:
     {
     }
 
-    BackiCore( const std::string &des, const std::string &src)
+    BackiCore(const std::string& des, const std::string& src)
     {
         desPath = des;
         srcPath = src;
@@ -39,45 +39,45 @@ public:
 
     ERR_TYPE cpy()
     {
-        return cpy( desPath, srcPath);
+        return cpy(desPath, srcPath);
     }
 
-    ERR_TYPE cpy( const std::string &des, std::string src)
+    ERR_TYPE cpy(const std::string& des, std::string src)
     {
-        files desFiles;
+        files tmpBuf;
 
 
         try
         {
-            if( ( des.empty()) || ( src.empty()) || ( des == src))
+            if ((des.empty()) || (src.empty()) || (des == src))
             {
                 return ERR_ADDRESS_INVALID;
             }
 
-            for( const std::filesystem::directory_entry &desElement : std::filesystem::recursive_directory_iterator( des))
+            for (const std::filesystem::directory_entry& desElement : std::filesystem::recursive_directory_iterator(des))
             {
                 std::cout << "des: " << desElement << " size:" << desElement.file_size() << " modifiTime:" << std::format("{}", desElement.last_write_time()) << std::endl;
-                desFiles.emplace( desElement.path().generic_string(), 0);
+                tmpBuf.emplace(desElement.path().generic_string().erase(0, des.length()), 0);
             }
 
-            for( const std::filesystem::directory_entry &srcElement : std::filesystem::recursive_directory_iterator( src))
+            for (const std::filesystem::directory_entry& srcElement : std::filesystem::recursive_directory_iterator(src))
             {
                 std::cout << "src: " << srcElement << " size:" << srcElement.file_size() << " modifiTime:" << std::format("{}", srcElement.last_write_time()) << std::endl;
-                files::iterator itr = desFiles.find( srcElement.path().generic_string());
+                files::iterator itr = tmpBuf.find(srcElement.path().generic_string().erase(0, src.length()));
 
 
-                if( itr != desFiles.end())//check for modification
+                if (itr != tmpBuf.end())//check for modification
                 {
-                    std::filesystem::directory_entry dr( itr->first);
+                    std::filesystem::directory_entry dr(des + itr->first);
 
 
-                    if( srcElement.last_write_time() != dr.last_write_time())
+                    if (srcElement.last_write_time() != dr.last_write_time())
                     {
-                        diff.try_emplace( srcElement.path().generic_string(), static_cast< std::int64_t>( dr.file_size() - srcElement.file_size()));
+                        diff.try_emplace(srcElement.path().generic_string(), static_cast<std::int64_t>(dr.file_size() - srcElement.file_size()));
                     }
 
                 }
-                else if( diff.try_emplace( srcElement.path().generic_string(), srcElement.file_size()).second)//it's a new file
+                else if (diff.try_emplace(srcElement.path().generic_string(), srcElement.file_size()).second)//it's a new file
                 {
                     std::cout << "insert Success!" << std::endl;
                 }
@@ -91,15 +91,17 @@ public:
 
             return ERR_SUCCESS;
         }
-        catch( std::filesystem::filesystem_error const &ex)
+        catch (std::filesystem::filesystem_error const& ex)
         {
+
             std::cout
+                << "\r\nException Occurred:" << '\n\n'
                 << "what():  " << ex.what() << '\n'
                 << "path1(): " << ex.path1() << '\n'
                 << "path2(): " << ex.path2() << '\n'
                 << "code().value():    " << ex.code().value() << '\n'
                 << "code().message():  " << ex.code().message() << '\n'
-                << "code().category(): " << ex.code().category().name() << std::endl;
+                << "code().category(): " << ex.code().category().name() << '\n';
         }
 
         return ERR_UNKNOWN;
@@ -118,7 +120,7 @@ int main()
 {
     BackiCore bk;
 
-    bk.cpy( "./dir1", "./dir2");
+    bk.cpy("./dir1", "./dir2");
 
     return 0;
 }

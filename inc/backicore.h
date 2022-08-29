@@ -12,7 +12,7 @@
 #define BACKICORE_H
 
 
-typedef enum
+enum class ERR_TYPE
 {
     ERR_SUCCESS = 0x00,
     ERR_FILE_NOT_FOUND,
@@ -20,7 +20,7 @@ typedef enum
     ERR_BAD_ARGUMENT,
 
     ERR_UNKNOWN = 0xFF
-}ERR_TYPE;
+};
 
 typedef std::map< std::string, std::int64_t> files;
 /*  In this particular case file size could be negetive, when modified files be smaller than initial one, so I have decided to save size differences

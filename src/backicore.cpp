@@ -35,7 +35,7 @@ ERR_TYPE BackiCore::cpy( const std::string &des, std::string &src)
     {
         if ((des.empty()) || (src.empty()) || (des == src))
         {
-            return ERR_ADDRESS_INVALID;
+            return ERR_TYPE::ERR_ADDRESS_INVALID;
         }
 
         for (const std::filesystem::directory_entry& desElement : std::filesystem::recursive_directory_iterator(des))
@@ -71,9 +71,7 @@ ERR_TYPE BackiCore::cpy( const std::string &des, std::string &src)
             }
         }
 
-
-
-        return ERR_SUCCESS;
+        return ERR_TYPE::ERR_SUCCESS;
     }
     catch( std::filesystem::filesystem_error const &ex)
     {
@@ -88,7 +86,7 @@ ERR_TYPE BackiCore::cpy( const std::string &des, std::string &src)
             << "code().category(): " << ex.code().category().name() << '\n';
     }
 
-    return ERR_UNKNOWN;
+    return ERR_TYPE::ERR_UNKNOWN;
 }
 
 BackiCore::~BackiCore()

@@ -41,7 +41,7 @@ if(Boost_FOUND)
 endif()
 
 #compile all *.cpp source files under src folder
-file (GLOB SOURCES "${PROJECT_DIR}/*.cpp")
+file (GLOB SOURCES "${PROJECT_DIR}/*.cpp" "${PROJECT_DIR}/src/*.cpp")
 
 add_executable(backi-core main.cpp ${SOURCES})
 target_link_libraries(backi-core ${PROJECT_LINK_LIBS} ${Boost_SYSTEM_LIBRARY} Threads::Threads)

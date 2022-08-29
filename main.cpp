@@ -1,12 +1,12 @@
-#include <iostream>
-#include "Backi-core.h"
+#include "backicore.h"
 
 
 int main()
 {
-    BackiCore bk;
+    BackiCore bk("./dir1", "./dir2");
 
-    bk.cpy("./dir1", "./dir2");
+    bk.cpy();
+
 
     return 0;
 }

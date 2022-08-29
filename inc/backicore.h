@@ -8,8 +8,9 @@
 #include <chrono>
 
 
-#ifndef BACKI_CORE_H
-#define BACKI_CORE_H
+#ifndef BACKICORE_H
+#define BACKICORE_H
+
 
 typedef enum
 {
@@ -33,11 +34,14 @@ public:
 
     BackiCore();
 
-    BackiCore(const std::string& des, const std::string& src);
+    BackiCore( const std::string &des, const std::string &src);
 
     ERR_TYPE cpy();
 
-    ERR_TYPE cpy(const std::string& des, std::string src);
+    ERR_TYPE cpy( const std::string &des, std::string &src);
+
+
+    ~BackiCore();
 
 private:
 
@@ -46,4 +50,4 @@ private:
     files                               diff;
 };
 
-#endif
+#endif // BACKICORE_H

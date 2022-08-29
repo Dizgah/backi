@@ -7,13 +7,15 @@
 #include <utility>
 #include <chrono>
 
-#include "Backi-core.h"
+#include "backicore.h"
+
 
 BackiCore::BackiCore()
 {
+
 }
 
-BackiCore::BackiCore( const std::string& des, const std::string& src)
+BackiCore::BackiCore( const std::string &des, const std::string &src)
 {
     desPath = des;
     srcPath = src;
@@ -24,7 +26,7 @@ ERR_TYPE BackiCore::cpy()
     return cpy(desPath, srcPath);
 }
 
-ERR_TYPE BackiCore::cpy(const std::string& des, std::string src)
+ERR_TYPE BackiCore::cpy( const std::string &des, std::string &src)
 {
     files tmpBuf;
 
@@ -73,7 +75,7 @@ ERR_TYPE BackiCore::cpy(const std::string& des, std::string src)
 
         return ERR_SUCCESS;
     }
-    catch (std::filesystem::filesystem_error const& ex)
+    catch( std::filesystem::filesystem_error const &ex)
     {
 
         std::cout
@@ -87,4 +89,9 @@ ERR_TYPE BackiCore::cpy(const std::string& des, std::string src)
     }
 
     return ERR_UNKNOWN;
+}
+
+BackiCore::~BackiCore()
+{
+
 }

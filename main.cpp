@@ -5,7 +5,7 @@ int main()
 {
     BackiCore bk("./dir1", "./dir2");
 
-    bk.cpy();
+    bk.makeCpyList();
 
 
     return 0;

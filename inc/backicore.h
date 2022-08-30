@@ -27,7 +27,6 @@ typedef std::map< std::string, std::int64_t> files;
  *  in int64_t rather than size_t in these case and because of space calculations.
 */
 
-
 class BackiCore
 {
 public:
@@ -36,9 +35,9 @@ public:
 
     BackiCore( const std::string &des, const std::string &src);
 
-    ERR_TYPE cpy();
+    ERR_TYPE makeCpyList();
 
-    ERR_TYPE cpy( const std::string &des, std::string &src);
+    ERR_TYPE makeCpyList( const std::string &des, std::string &src);
 
 
     ~BackiCore();

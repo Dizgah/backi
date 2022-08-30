@@ -21,12 +21,12 @@ BackiCore::BackiCore( const std::string &des, const std::string &src)
     srcPath = src;
 }
 
-ERR_TYPE BackiCore::cpy()
+ERR_TYPE BackiCore::makeCpyList()
 {
-    return cpy(desPath, srcPath);
+    return makeCpyList(desPath, srcPath);
 }
 
-ERR_TYPE BackiCore::cpy( const std::string &des, std::string &src)
+ERR_TYPE BackiCore::makeCpyList( const std::string &des, std::string &src)
 {
     files tmpBuf;
 

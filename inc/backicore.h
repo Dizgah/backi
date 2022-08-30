@@ -18,6 +18,8 @@ enum class ERR_TYPE
     ERR_FILE_NOT_FOUND,
     ERR_ADDRESS_INVALID,
     ERR_BAD_ARGUMENT,
+    ERR_NOTHING_TODO,
+    ERR_OPERATION_FAILED,
 
     ERR_UNKNOWN = 0xFF
 };
@@ -38,6 +40,8 @@ public:
     ERR_TYPE makeCpyList();
 
     ERR_TYPE makeCpyList( const std::string &des, std::string &src);
+
+    ERR_TYPE cpy();
 
 
     ~BackiCore();

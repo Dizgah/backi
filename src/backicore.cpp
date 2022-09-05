@@ -101,29 +101,30 @@ ERR_TYPE BackiCore::cpy()
         for ( auto itr : diff)
         {
             std::cout << "File:" << itr.first << " Size:" << itr.second << std::endl;
-            
-            if( !std::filesystem::copy_file( itr.first + srcPath, itr.first + desPath))
+            std::string desAdr = itr.first;
+
+            desAdr.replace( 0, desPath.length(), desPath);
+
+            if( !std::filesystem::copy_file( itr.first, desAdr))
             {
                 std::cout << "Copy Failed! on File:" << itr.first << " Size:" << itr.second << std::endl;
 
                 return ERR_TYPE::ERR_OPERATION_FAILED;
             }
-
-
         }
 
         return ERR_TYPE::ERR_SUCCESS;
     }
-    catch (std::filesystem::filesystem_error const& ex)
+    catch( std::filesystem::filesystem_error const &ex)
     {
 
         std::cout
-            << "\r\nException Occurred:" << '\n\n'
-            << "what():  " << ex.what() << '\n'
-            << "path1(): " << ex.path1() << '\n'
-            << "path2(): " << ex.path2() << '\n'
-            << "code().value():    " << ex.code().value() << '\n'
-            << "code().message():  " << ex.code().message() << '\n'
+            << "\r\nException Occurred:" << std::endl
+            << "what():  " << ex.what() << std::endl
+            << "path1(): " << ex.path1() << std::endl
+            << "path2(): " << ex.path2() << std::endl
+            << "code().value():    " << ex.code().value() << std::endl
+            << "code().message():  " << ex.code().message() << std::endl
             << "code().category(): " << ex.code().category().name() << std::endl;
     }
 

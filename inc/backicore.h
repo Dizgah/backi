@@ -37,6 +37,7 @@ public:
 
     BackiCore( const std::string &des, const std::string &src);
 
+
     ERR_TYPE makeCpyList();
 
     ERR_TYPE makeCpyList( const std::string &des, std::string &src);
@@ -51,6 +52,7 @@ private:
     std::string                         desPath;
     std::string                         srcPath;
     files                               diff;
+    std::size_t                         needSpace;
 };
 
 #endif // BACKICORE_H

@@ -6,6 +6,7 @@
 #include <map>
 #include <utility>
 #include <chrono>
+#include <string_view>
 
 #include "backicore.h"
 
@@ -15,7 +16,7 @@ BackiCore::BackiCore()
 
 }
 
-BackiCore::BackiCore( const std::string &des, const std::string &src)
+BackiCore::BackiCore( std::string_view des, std::string_view src)
 {
     desPath = des;
     srcPath = src;
@@ -26,7 +27,7 @@ ERR_TYPE BackiCore::makeCpyList()
     return makeCpyList(desPath, srcPath);
 }
 
-ERR_TYPE BackiCore::makeCpyList( const std::string &des, std::string &src)
+ERR_TYPE BackiCore::makeCpyList( std::string_view des, std::string_view src)
 {
     files tmpBuf;
 
@@ -52,7 +53,7 @@ ERR_TYPE BackiCore::makeCpyList( const std::string &des, std::string &src)
 
             if (itr != tmpBuf.end())//check for modification
             {
-                std::filesystem::directory_entry dr(des + itr->first);
+                std::filesystem::directory_entry dr( std::string( des) + std::string( itr->first));
 
 
                 if (srcElement.last_write_time() != dr.last_write_time())
@@ -102,7 +103,7 @@ ERR_TYPE BackiCore::cpy()
         for ( auto itr : diff)
         {
             std::cout << "File:" << itr.first << " Size:" << itr.second << std::endl;
-            std::string desAdr = itr.first;
+            std::string desAdr{ itr.first };
 
             desAdr.replace( 0, desPath.length(), desPath);
 
@@ -144,7 +145,7 @@ ERR_TYPE BackiCore::cpyAsync()
         for (auto itr : diff)
         {
             std::cout << "File:" << itr.first << " Size:" << itr.second << std::endl;
-            std::string desAdr = itr.first;
+            std::string desAdr{ itr.first};
 
             desAdr.replace(0, desPath.length(), desPath);
 

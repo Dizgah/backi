@@ -6,6 +6,7 @@
 #include <map>
 #include <utility>
 #include <chrono>
+#include <string_view>
 
 
 #ifndef BACKICORE_H
@@ -24,7 +25,7 @@ enum class ERR_TYPE
     ERR_UNKNOWN = 0xFF
 };
 
-typedef std::map< std::string, std::int64_t> files;
+typedef std::map< std::string_view, std::int64_t> files;
 /*  In this particular case file size could be negetive, when modified files be smaller than initial one, so I have decided to save size differences
  *  in int64_t rather than size_t in these case and because of space calculations.
 */
@@ -35,12 +36,12 @@ public:
 
     BackiCore();
 
-    BackiCore( const std::string &des, const std::string &src);
+    BackiCore( std::string_view des, std::string_view src);
 
 
     ERR_TYPE makeCpyList();
 
-    ERR_TYPE makeCpyList( const std::string &des, std::string &src);
+    ERR_TYPE makeCpyList( std::string_view des, std::string_view src);
 
     ERR_TYPE cpy();
 
@@ -51,8 +52,8 @@ public:
 
 private:
 
-    std::string                         desPath;
-    std::string                         srcPath;
+    std::string_view                    desPath;
+    std::string_view                    srcPath;
     files                               diff;
     std::size_t                         needSpace;
 

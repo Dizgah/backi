@@ -58,6 +58,7 @@ ERR_TYPE BackiCore::makeCpyList( const std::string &des, std::string &src)
                 if (srcElement.last_write_time() != dr.last_write_time())
                 {
                     diff.try_emplace(srcElement.path().generic_string(), static_cast<std::int64_t>(dr.file_size() - srcElement.file_size()));
+                    std::cout << "Modification detected!" << std::endl;
                 }
 
             }
@@ -105,7 +106,7 @@ ERR_TYPE BackiCore::cpy()
 
             desAdr.replace( 0, desPath.length(), desPath);
 
-            if( !std::filesystem::copy_file( itr.first, desAdr))
+            if( !std::filesystem::copy_file( itr.first, desAdr, std::filesystem::copy_options::overwrite_existing))
             {
                 std::cout << "Copy Failed! on File:" << itr.first << " Size:" << itr.second << std::endl;
 
@@ -116,6 +117,48 @@ ERR_TYPE BackiCore::cpy()
         return ERR_TYPE::ERR_SUCCESS;
     }
     catch( std::filesystem::filesystem_error const &ex)
+    {
+
+        std::cout
+            << "\r\nException Occurred:" << std::endl
+            << "what():  " << ex.what() << std::endl
+            << "path1(): " << ex.path1() << std::endl
+            << "path2(): " << ex.path2() << std::endl
+            << "code().value():    " << ex.code().value() << std::endl
+            << "code().message():  " << ex.code().message() << std::endl
+            << "code().category(): " << ex.code().category().name() << std::endl;
+    }
+
+    return ERR_TYPE::ERR_UNKNOWN;
+}
+
+ERR_TYPE BackiCore::cpyAsync()
+{
+    try
+    {
+        if (diff.empty())
+        {
+            return ERR_TYPE::ERR_NOTHING_TODO;
+        }
+
+        for (auto itr : diff)
+        {
+            std::cout << "File:" << itr.first << " Size:" << itr.second << std::endl;
+            std::string desAdr = itr.first;
+
+            desAdr.replace(0, desPath.length(), desPath);
+
+            if (!std::filesystem::copy_file(itr.first, desAdr))
+            {
+                std::cout << "Copy Failed! on File:" << itr.first << " Size:" << itr.second << std::endl;
+
+                return ERR_TYPE::ERR_OPERATION_FAILED;
+            }
+        }
+
+        return ERR_TYPE::ERR_SUCCESS;
+    }
+    catch (std::filesystem::filesystem_error const& ex)
     {
 
         std::cout

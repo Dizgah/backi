@@ -44,6 +44,8 @@ public:
 
     ERR_TYPE cpy();
 
+    ERR_TYPE cpyAsync();
+
 
     ~BackiCore();
 
@@ -53,6 +55,7 @@ private:
     std::string                         srcPath;
     files                               diff;
     std::size_t                         needSpace;
+
 };
 
 #endif // BACKICORE_H

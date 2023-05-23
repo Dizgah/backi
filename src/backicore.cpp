@@ -29,17 +29,48 @@ ERR_TYPE BackiCore::makeCpyList()
 
 ERR_TYPE BackiCore::makeCpyList( std::string_view des, std::string_view src)
 {
-    files tmpBuf;
+    files                               tmpBuf;
+    std::filesystem::directory_entry    dir;
 
 
     try
     {
-        if ((des.empty()) || (src.empty()) || (des == src))
+        //@TODO:It's better to implement a seperate validation method in the future!
+        if (( des.empty()) || ( src.empty()) || ( des == src))
         {
             return ERR_TYPE::ERR_ADDRESS_INVALID;
         }
 
-        for (const std::filesystem::directory_entry& desElement : std::filesystem::recursive_directory_iterator(des))
+        dir.assign( des);
+        if( !dir.exists())
+        {
+            std::cerr << "Error: " << des << " directory is not exist !" << std::endl;
+
+            return ERR_TYPE::ERR_ADDRESS_INVALID;
+        }
+        else if( !dir.is_directory())
+        {
+            std::cerr << "Error: " << des << " directory is Invalid !" << std::endl;
+
+            return ERR_TYPE::ERR_ADDRESS_INVALID;
+        }
+
+        dir.assign ( src);
+        if( !dir.exists ())
+        {
+            std::cerr << "Error: " << des << " directory is not exist !" << std::endl;
+
+            return ERR_TYPE::ERR_ADDRESS_INVALID;
+        }
+        else if( !dir.is_directory ())
+        {
+            std::cerr << "Error: " << des << " directory is Invalid !" << std::endl;
+
+            return ERR_TYPE::ERR_ADDRESS_INVALID;
+        }
+
+
+        for( const std::filesystem::directory_entry& desElement : std::filesystem::recursive_directory_iterator(des))
         {
             std::cout << "des: " << desElement << " size:" << desElement.file_size() << " modifiedTime:" << std::format("{}", desElement.last_write_time()) << std::endl;
             tmpBuf.emplace( desElement.path().generic_string().erase(0, des.length()), 0);
@@ -59,17 +90,16 @@ ERR_TYPE BackiCore::makeCpyList( std::string_view des, std::string_view src)
                 if (srcElement.last_write_time() != dr.last_write_time())
                 {
                     diff.try_emplace(srcElement.path().generic_string(), static_cast<std::int64_t>(dr.file_size() - srcElement.file_size()));
-                    std::cout << "Modification detected!" << std::endl;
+                    std::cout << "inserting modified " << srcElement.path ().generic_string () << " Success !" << std::endl;
                 }
-
             }
             else if (diff.try_emplace(srcElement.path().generic_string(), srcElement.file_size()).second)//it's a new file
             {
-                std::cout << "insert Success!" << std::endl;
+                std::cout << "inserting " << srcElement.path().generic_string() << " Success !" << std::endl;
             }
-            else//insreting new file to list has been failed!
+            else//inserting new file to list has been failed!
             {
-                std::cout << "insert Failed!" << std::endl;
+                std::cout << "inserting " << srcElement.path().generic_string() << " Failed !" << std::endl;
             }
         }
 
@@ -174,7 +204,6 @@ ERR_TYPE BackiCore::cpyAsync()
 
     return ERR_TYPE::ERR_UNKNOWN;
 }
-
 
 BackiCore::~BackiCore()
 {

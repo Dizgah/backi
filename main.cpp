@@ -21,16 +21,22 @@ int main(int argc, char* argv[])
     {
         dir.assign( arguments.at( cntr));
         //std::cout << arguments.at( cntr) << std::endl;
-
-        if( !dir.is_directory())
+        if( !dir.exists())
         {
-            std::cerr << "Error: " << arguments.at(cntr) << " directory is Invalid !" << std::endl;
+            std::cerr << "Error: " << arguments.at ( cntr ) << " directory is not exist !" << std::endl;
 
             return -1;
         }
+        else if( !dir.is_directory())
+        {
+            std::cerr << "Error: " << arguments.at( cntr) << " directory is Invalid !" << std::endl;
+
+            return -2;
+        }
     }
 
-    BackiCore bk( arguments.at( 0), arguments.at( 1));
+    BackiCore bk ( arguments.at ( 0), arguments.at ( 1));
+    //BackiCore bk ( "dir1", "dir2");
 
     bk.makeCpyList();
     bk.cpy();

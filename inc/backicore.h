@@ -25,7 +25,7 @@ enum class ERR_TYPE
     ERR_UNKNOWN = 0xFF
 };
 
-typedef std::map< std::string_view, std::int64_t> files;
+typedef std::map< std::string, std::int64_t> files;
 /*  In this particular case file size could be negetive, when modified files be smaller than initial one, so I have decided to save size differences
  *  in int64_t rather than size_t in these case and because of space calculations.
 */
@@ -36,12 +36,12 @@ public:
 
     BackiCore();
 
-    BackiCore( std::string_view src, std::string_view des);
+    BackiCore( const std::string& src, const std::string& des);
 
 
     ERR_TYPE makeCpyList();
 
-    ERR_TYPE makeCpyList( std::string_view src, std::string_view des);
+    ERR_TYPE makeCpyList( const std::string& src, const std::string& des );
 
     ERR_TYPE cpy();
 
@@ -52,10 +52,10 @@ public:
 
 private:
 
-    std::string_view                    desPath;
-    std::string_view                    srcPath;
-    files                               diff;
-    std::size_t                         needSpace;
+    std::string                     desPath;
+    std::string                     srcPath;
+    files                           diff;
+    std::size_t                     needSpace;
 
 };
 

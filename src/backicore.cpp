@@ -16,7 +16,7 @@ BackiCore::BackiCore()
 
 }
 
-BackiCore::BackiCore( std::string_view src, std::string_view des)
+BackiCore::BackiCore( const std::string &src, const std::string &des)
 {
     srcPath = src;
     desPath = des;
@@ -27,7 +27,7 @@ ERR_TYPE BackiCore::makeCpyList()
     return makeCpyList( srcPath, desPath);
 }
 
-ERR_TYPE BackiCore::makeCpyList( std::string_view src, std::string_view des)
+ERR_TYPE BackiCore::makeCpyList( const std::string &src, const std::string &des)
 {
     files                               tmpBuf;
     std::filesystem::directory_entry    dir;

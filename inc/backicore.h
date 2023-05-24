@@ -36,12 +36,12 @@ public:
 
     BackiCore();
 
-    BackiCore( std::string_view des, std::string_view src);
+    BackiCore( std::string_view src, std::string_view des);
 
 
     ERR_TYPE makeCpyList();
 
-    ERR_TYPE makeCpyList( std::string_view des, std::string_view src);
+    ERR_TYPE makeCpyList( std::string_view src, std::string_view des);
 
     ERR_TYPE cpy();
 

@@ -45,3 +45,4 @@ file (GLOB SOURCES "${PROJECT_DIR}/*.cpp" "${PROJECT_DIR}/src/*.cpp")
 
 add_executable(backi-core main.cpp ${SOURCES})
 target_link_libraries(backi-core ${PROJECT_LINK_LIBS} ${Boost_SYSTEM_LIBRARY} Threads::Threads)
+

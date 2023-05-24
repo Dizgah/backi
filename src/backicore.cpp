@@ -16,18 +16,18 @@ BackiCore::BackiCore()
 
 }
 
-BackiCore::BackiCore( std::string_view des, std::string_view src)
+BackiCore::BackiCore( std::string_view src, std::string_view des)
 {
-    desPath = des;
     srcPath = src;
+    desPath = des;
 }
 
 ERR_TYPE BackiCore::makeCpyList()
 {
-    return makeCpyList(desPath, srcPath);
+    return makeCpyList( srcPath, desPath);
 }
 
-ERR_TYPE BackiCore::makeCpyList( std::string_view des, std::string_view src)
+ERR_TYPE BackiCore::makeCpyList( std::string_view src, std::string_view des)
 {
     files                               tmpBuf;
     std::filesystem::directory_entry    dir;
@@ -62,7 +62,7 @@ ERR_TYPE BackiCore::makeCpyList( std::string_view des, std::string_view src)
 
             return ERR_TYPE::ERR_ADDRESS_INVALID;
         }
-        else if( !dir.is_directory ())
+        else if( !dir.is_directory())
         {
             std::cerr << "Error: " << des << " directory is Invalid !" << std::endl;
 

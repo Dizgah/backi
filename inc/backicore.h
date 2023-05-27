@@ -53,6 +53,8 @@ public:
 
     ERR_TYPE cpyAsync();
 
+    ERR_TYPE checkCpy();//@TODO:need to check if all files have been copied successfully!
+
 
     ~BackiCore();
 

@@ -157,10 +157,8 @@ ERR_TYPE BackiCore::cpy()
             desAdr.replace( 0, desPath.length(), desPath);
 
             if( std::filesystem::is_directory ( itr.first))
-            {
-                const auto copyOptions = std::filesystem::copy_options::update_existing | std::filesystem::copy_options::recursive | std::filesystem::copy_options::directories_only;
-                
-                std::filesystem::copy ( itr.first, desAdr, copyOptions);
+            {                
+                std::filesystem::create_directory( desAdr);
             }
             else if( !std::filesystem::copy_file( itr.first, desAdr, std::filesystem::copy_options::overwrite_existing))
             {

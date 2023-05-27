@@ -194,6 +194,65 @@ ERR_TYPE BackiCore::cpyAsync()
     return ERR_TYPE::ERR_UNKNOWN;
 }
 
+ERR_TYPE BackiCore::checkCpy()
+{
+    try
+    {
+        std::string                         desAdr;
+        std::filesystem::directory_entry    dir;
+
+
+        for( auto itr : diff)
+        {
+            if( logLevel == LOG_LEVEL::LOG_LEVEL_ENABLE)
+            {
+                std::cout << "File:" << itr.first << " Size:" << itr.second << std::endl;
+            }
+
+            desAdr.clear();
+            desAdr.assign( itr.first);
+            desAdr.replace( 0, desPath.length(), desPath);
+            dir.assign( desAdr);
+
+            if( dir.is_directory())
+            {
+                if( logLevel == LOG_LEVEL::LOG_LEVEL_ENABLE)
+                {
+                    std::cerr << desAdr << " directory verified !" << std::endl;
+                }
+
+                return ERR_TYPE::ERR_ADDRESS_INVALID;
+            }            
+            else if( !dir.exists())
+            {
+                if( logLevel == LOG_LEVEL::LOG_LEVEL_ENABLE)
+                {
+                    std::cerr << "Error: " << desAdr << " directory is not exist !" << std::endl;
+                }
+
+                return ERR_TYPE::ERR_ADDRESS_INVALID;
+            }
+        }
+
+        return ERR_TYPE::ERR_SUCCESS;
+    }
+    catch( std::filesystem::filesystem_error const& ex)
+    {
+
+        std::cout
+            << "\r\nException Occurred:" << std::endl
+            << "what():  " << ex.what () << std::endl
+            << "path1(): " << ex.path1 () << std::endl
+            << "path2(): " << ex.path2 () << std::endl
+            << "code().value():    " << ex.code ().value () << std::endl
+            << "code().message():  " << ex.code ().message () << std::endl
+            << "code().category(): " << ex.code ().category ().name () << std::endl;
+    }
+
+    return ERR_TYPE::ERR_UNKNOWN;
+
+}
+
 BackiCore::~BackiCore()
 {
 

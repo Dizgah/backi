@@ -49,6 +49,8 @@ public:
 
     ERR_TYPE makeCpyList( const std::string& src, const std::string& des );
 
+    ERR_TYPE checkConfirmCpyList();//@TODO:need to check if user wanted to modify the copy list!
+
     ERR_TYPE cpy();
 
     ERR_TYPE cpyAsync();

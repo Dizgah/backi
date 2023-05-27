@@ -158,7 +158,7 @@ ERR_TYPE BackiCore::cpy()
 
             if( std::filesystem::is_directory ( itr.first))
             {                
-                std::filesystem::create_directory( desAdr);
+                std::filesystem::create_directory( desAdr, itr.first);
             }
             else if( !std::filesystem::copy_file( itr.first, desAdr, std::filesystem::copy_options::overwrite_existing))
             {
